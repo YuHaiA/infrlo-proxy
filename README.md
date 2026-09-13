@@ -18,11 +18,14 @@
 | `PUBLIC_HOST` | 平台分配的公开域名，不含 `https://` 或路径 |
 | `PORT` | Infrlo 应用配置返回的 HTTP 端口，本实例为 `5000`，需要显式设置 |
 | `WS_PATH` | 可选，默认 `/vless` |
-| `EXTRA_NODES_JSON` | 可选，`{"clash": [...], "v2ray": [...]}`，用于合并已有节点 |
+| `EXTRA_NODES_B64` | 可选，将 `{"clash": [...], "v2ray": [...]}` 的 UTF-8 JSON 转为 Base64，用于合并已有节点，推荐在 Infrlo 上使用 |
+| `EXTRA_NODES_JSON` | 可选的原始 JSON 格式；设置 `EXTRA_NODES_B64` 时优先使用 Base64 配置 |
 
 保存变量后重启或重新部署。认证信息缺失时不会开放代理。
 
 Infrlo 当前的 Python 构建环境提供 `python3`，没有 `python` 命令。控制台显示 `running` 或 `Deployment Successful` 后，仍需检查 `/health` 是否返回 HTTP 200。
+
+Base64 用于避免 JSON 引号及节点 URI 特殊字符影响平台传递环境变量；它不是加密，配置中仍包含节点凭据。
 
 ## 使用
 

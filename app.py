@@ -30,7 +30,9 @@ VLESS_UUID = os.environ.get("VLESS_UUID", "")
 if VLESS_UUID:
     VLESS_UUID = str(uuid.UUID(VLESS_UUID))
 PUBLIC_HOST = os.environ.get("PUBLIC_HOST", "").strip().lower()
-EXTRA = json.loads(os.environ.get("EXTRA_NODES_JSON", "{}"))
+encoded_extra = os.environ.get("EXTRA_NODES_B64", "")
+EXTRA = json.loads(base64.b64decode(encoded_extra, validate=True) if encoded_extra
+                   else os.environ.get("EXTRA_NODES_JSON", "{}"))
 
 
 def hostname(request):
