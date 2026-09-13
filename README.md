@@ -4,8 +4,8 @@
 
 ## 部署
 
-- Build Command: `pip install -r requirements.txt && python install_xray.py`
-- Run Command: `python app.py`
+- Build Command: `python3 -m pip install --disable-pip-version-check -r requirements.txt && python3 install_xray.py`
+- Run Command: `python3 app.py`
 - 应用监听 `0.0.0.0:$PORT`；没有 `PORT` 时使用 8080。
 - 使用平台提供的 HTTPS 应用域名，由平台负责入口 TLS。Xray 只监听容器内部回环地址。
 
@@ -16,11 +16,13 @@
 | `VLESS_UUID` | 随机 UUID，用于节点身份验证，必须设置 |
 | `SUB_TOKEN` | 至少 24 字符的随机订阅令牌，必须设置 |
 | `PUBLIC_HOST` | 平台分配的公开域名，不含 `https://` 或路径 |
-| `PORT` | 平台指定的 HTTP 端口 |
+| `PORT` | Infrlo 应用配置返回的 HTTP 端口，本实例为 `5000`，需要显式设置 |
 | `WS_PATH` | 可选，默认 `/vless` |
 | `EXTRA_NODES_JSON` | 可选，`{"clash": [...], "v2ray": [...]}`，用于合并已有节点 |
 
 保存变量后重启或重新部署。认证信息缺失时不会开放代理。
+
+Infrlo 当前的 Python 构建环境提供 `python3`，没有 `python` 命令。控制台显示 `running` 或 `Deployment Successful` 后，仍需检查 `/health` 是否返回 HTTP 200。
 
 ## 使用
 
