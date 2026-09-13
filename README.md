@@ -4,7 +4,7 @@
 
 ## 部署
 
-- Build Command: `python3 -m pip install --disable-pip-version-check -r requirements.txt && python3 install_xray.py`
+- Build Command: `python3 build.py`
 - Run Command: `python3 app.py`
 - 应用监听 `0.0.0.0:$PORT`；没有 `PORT` 时使用 8080。
 - 使用平台提供的 HTTPS 应用域名，由平台负责入口 TLS。Xray 只监听容器内部回环地址。
@@ -24,6 +24,8 @@
 保存变量后重启或重新部署。认证信息缺失时不会开放代理。
 
 Infrlo 当前的 Python 构建环境提供 `python3`，没有 `python` 命令。控制台显示 `running` 或 `Deployment Successful` 后，仍需检查 `/health` 是否返回 HTTP 200。
+
+使用单一构建脚本完成依赖安装和 Xray 下载，避免平台将 `&&` 后的命令执行到构建容器之外。
 
 Base64 用于避免 JSON 引号及节点 URI 特殊字符影响平台传递环境变量；它不是加密，配置中仍包含节点凭据。
 
